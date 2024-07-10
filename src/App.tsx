@@ -1,8 +1,9 @@
-import { MapPin, Calendar, ArrowRight, UserRoundPlus, Settings2 } from 'lucide-react';
+import { MapPin, Calendar, ArrowRight, UserRoundPlus, Settings2, X } from 'lucide-react';
 import { useState } from 'react';
 
 function App() {
   const [isGuestInputOpen, setIsGuestInputOpen] = useState(false);
+  const [isGuestModalOpen, setIsGuestModalOpen] = useState(false);
 
   function openGuestInput() {
     setIsGuestInputOpen(true);
@@ -10,6 +11,14 @@ function App() {
 
   function closeGuestInput() {
     setIsGuestInputOpen(false);
+  }
+
+  function openGuestModal() {
+    setIsGuestModalOpen(true);
+  }
+
+  function closeGuestModal() {
+    setIsGuestModalOpen(false);
   }
 
 
@@ -45,11 +54,11 @@ function App() {
 
         {isGuestInputOpen ? (
           <div className="h-16 bg-zinc-900 px-4 rounded-xl flex items-center shadow-shape gap-3">
-          <div className="flex items-center gap-2 flex-1">
+          <button type='button' onClick={openGuestModal} className="flex items-center gap-2 flex-1">
             <UserRoundPlus className="size-5 text-zinc-400" />
-            <input type="text" placeholder="Quem estará na viagem?" className="bg-transparent text-lg placeholder-zinc-400 outline-none flex-1" />
+            <span className='text-zinc-400 text-lg flex-1 text-left'>Quem estará na viagem?</span>
             
-          </div>
+          </button>
 
           <div className="w-px h-6 bg-zinc-800"></div>
 
@@ -65,6 +74,19 @@ function App() {
           com nossos <a className="text-zinc-300 underline" href="#">termos de uso</a> e <a className="text-zinc-300 underline" href="#">políticas de privacidade</a>.
         </p>
       </div>
+
+      {isGuestModalOpen && (
+        <div className='fixed inset-0 bg-black/60 flex items-center justify-center'>
+          <div className='w-[640px] rounded-xl py-5 px-6 shadow-shape bg-zinc-900'>
+            <div className='flex items-center justify-between'>
+              <h2>Selecionar convidados</h2>
+              <button type='button' onClick={closeGuestModal}>
+                <X className="size-5 text-zinc-400" />
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
